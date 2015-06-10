@@ -32,7 +32,34 @@
             </div>
             <div class="panel" ng-show="panel.isSelected(2)">
                 <h4>Reviews</h4>
-                <blockquote>None Yet</blockquote>
+                <blockquote ng-repeat="review in product.reviews">
+                    <b>Stars: {{review.stars}}</b>
+                    {{review.body}}
+                    <cite>by: {{review.author}}</cite>
+                </blockquote>
+
+                <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+                      ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)"
+                      novalidate>
+                    <blockquote>
+                        <b>Stars: {{reviewCtrl.review.stars}}</b>
+                        {{reviewCtrl.review.body}}
+                        <cite>By: {{reviewCtrl.review.author}}</cite>
+                    </blockquote>
+
+                    <select ng-model="reviewCtrl.review.stars" required>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Star</option>
+                        <option value="3">3 Star</option>
+                        <option value="4">4 Star</option>
+                        <option value="5">5 Star</option>
+                    </select>
+                    <textarea ng-model="reviewCtrl.review.body" required></textarea>
+                    <label>By:</label>
+                    <input ng-model="reviewCtrl.review.author" type="email" required />
+                    <input type="submit" value="Submit" />
+                    <div>reviewForm is {{reviewForm.$valid}}</div>
+                </form>
             </div>
             <div class="panel" ng-show="panel.isSelected(3)">
                 <h4>Specifications</h4>
@@ -44,5 +71,14 @@
 
     <script type="text/javascript" src="/AngularTutorial/lib/angular.min.js"></script>
     <script type="text/javascript" src="/AngularTutorial/js/app.js"></script>
+
+<style type="text/css">
+    .ng-invalid.ng-dirty {
+        border-color: #FA787E;
+    }
+    .ng-valid.ng-dirty {
+        border-color: #78FA89;
+    }
+</style>
 </body>
 </html>
